@@ -1,0 +1,23 @@
+.Navbar{
+ background-color: deeppink;
+
+}
+
+.Navigation{
+ margin-bottom: 20px;
+}
+
+.Brand{
+ color: white;
+ font-size: 25px;
+ width: 80px;
+}
+
+.Brand img{
+ width: 100%;
+}
+.NavLink{ 
+ color: white !important;}
+.NavLink:hover{
+ color: wheat;
+}
