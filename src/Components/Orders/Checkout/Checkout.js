@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'reactstrap'
+import { Button, Modal, ModalBody } from 'reactstrap'
+import { resetIngredients } from '../../Redux/ActionCreator'
 import Spinner from '../../Spinner/Spinner'
 
 
@@ -13,6 +14,12 @@ const mapStateToProps = state => {
  }
 }
 
+const mapDispatchToProps = dispatch => {
+ return {
+  resetIngredients: () => dispatch(resetIngredients())
+ }
+}
+
 export class Checkout extends Component {
  state = {
   values: {
@@ -21,7 +28,7 @@ export class Checkout extends Component {
    paymentType: "Cash On Delivery"
   },
   isLoading: false,
-  
+  modalMsg: "",
  }
 
  goBack = () => {
@@ -32,36 +39,43 @@ export class Checkout extends Component {
   this.setState({
    values: {
     ...this.state.values,
-    [event.target.name]:event.target.value
-  }
- })
-}
+    [event.target.name]: event.target.value
+   }
+  })
+ }
 
  submitHandler = () => {
-  this.setState({isLoading:true})
+  this.setState({ isLoading: true })
   const order = {
    ingredients: this.props.ingredients,
    customer: this.state.values,
    price: this.props.totalPrice,
-   orderTime:new Date()
+   orderTime: new Date()
   }
   axios.post("https://burger-builder-b1bb9-default-rtdb.firebaseio.com/order.json", order)
    .then(response => {
     if (response.status == 200) {
      this.setState({
-      isLoading:false
+      isLoading: false,
+      isModalOpen: true,
+      modalMsg: "Order Placed Successfully",
      })
+     this.props.resetIngredients();
     } else {
      this.setState({
-      isLoading: false
+      isLoading: false,
+      isModalOpen: true,
+      modalMsg: "Something Went Wrong",
      })
     }
    })
    .catch(err => this.setState({
-    isLoading: false
+    isLoading: false,
+    isModalOpen: true,
+    modalMsg: "Something Went Wrong. Order Again!!!",
    }))
  }
- 
+
  render() {
   let form = (<div>
    <h4 className="border border-success px-5 py-5">Payment: {this.props.totalPrice}BDT</h4>
@@ -95,12 +109,17 @@ export class Checkout extends Component {
      disabled={!this.props.purchaseable}>Place Order</Button>
    </form>
   </div>)
-   return (
-    <div>
-     {this.state.isLoading?<Spinner/>:form}
-    </div>
-   )
-  }
+  return (
+   <div>
+    {this.state.isLoading ? <Spinner /> : form}
+    <Modal isOpen={this.state.isModalOpen} onClick={this.goBack}>
+     <ModalBody>
+      <p>{this.state.modalMsg}</p>
+     </ModalBody>
+    </Modal>
+   </div>
+  )
+ }
 }
 
-export default connect(mapStateToProps)(Checkout)
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
