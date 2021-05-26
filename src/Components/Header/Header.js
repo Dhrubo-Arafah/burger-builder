@@ -18,9 +18,9 @@ class Header extends Component{
  render() {
   return (
    <div className="Navigation" >
-    <Navbar className="Navbar" expand="sm" dark color="dark">
+    <Navbar className="Navbar" expand="sm" dark color="dark" exact="true" >
      <div className="container">
-      <NavbarBrand className="Brand" exact to="/">
+      <NavbarBrand className="Brand" exact="true" >
        <img src={Logo} alt="logo" />
       </NavbarBrand>
       <NavbarToggler onClick={this.navToggler} />
