@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardBody, CardFooter, CardHeader } from 'reactstrap'
+import { Button, Card, CardBody, CardFooter, CardHeader } from 'reactstrap'
 import './Controls.css'
 
 const controls = [
@@ -40,6 +40,7 @@ const Controls = props => {
         }
         </CardBody>
         <CardFooter><h5>Price: {props.price}BDT</h5></CardFooter>
+        <Button disabled={!props.purchaseable} onClick={props.modal }>Order Now</Button>
       </Card>
     </div>
   )
