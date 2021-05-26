@@ -6,7 +6,7 @@ const Burger = props => {
  let ingredientArr = props.ingredients.map(item => {
   let amountArr = [...Array(item.amount).keys()];
   return amountArr.map(_ => {
-   return <Ingredient type={item.type} key={amountArr.length} />
+   return <Ingredient type={item.type} key={Math.random()} />
   })
  })
 
@@ -15,7 +15,7 @@ const Burger = props => {
   }, []);
 
  if (ingredientArr.length === 0) {
- ingredientArr=<p>Please Add Some Ingredient</p>
+ ingredientArr=<p>Please Add Some Ingredients!!</p>
 }
  
  return (
