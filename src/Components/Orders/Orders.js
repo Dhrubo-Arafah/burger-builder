@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchOrders } from '../Redux/ActionCreator';
+import Order from './Order/Order';
+import Spinner from '../Spinner/Spinner'
 
 const mapStateToProps = state => {
  return {
@@ -23,9 +25,22 @@ class Orders extends Component {
   console.log(this.props.orders)
  }
  render() {
+  let orders = null;
+  if (this.props.orderErr) {
+   orders = <p className="Order">Sorry Failed To Load Orders</p>
+  } else {
+   if (this.props.orders.length === 0) {
+    orders = <p className="Order">Sorry! You have no orders</p>
+   } else {
+    orders = this.props.orders.map(order => {
+     return <div><Order order={order} key={order.id} /></div>
+    }
+    )
+   }
+  }
   return (
    <div>
-    
+    {this.props.orderLoading?<Spinner/>: orders}
    </div>
   )
  }
