@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { Formik } from 'formik';
 import './Auth.css'
+import { connect } from 'react-redux';
+import { auth } from '../Redux/AuthActionCreator';
+
+const mapDispatchToProps = dispatch => {
+ return {
+  auth:(email, password, mode)=>dispatch(auth(email, password, mode))
+ }
+}
 
 class Auth extends Component {
  state = {
@@ -27,7 +35,7 @@ class Auth extends Component {
 
      onSubmit={
       (values) => {
-       console.log("Values", values);
+      this.props.auth(values.email, values.password, this.state.mode)
       }
      }
 
@@ -42,8 +50,10 @@ class Auth extends Component {
 
       if (!values.password) {
        errors.password = 'Required'
-      } else if (values.password.length < 4) {
-       errors.password = 'Must be atleast 4 character'
+      } else if (values.password.length < 6) {
+       errors.password = 'Must be atleast 6 character'
+      } else if (values.password === '123456') {
+       errors.password = 'Very Weak Password'
       }
 
       if (this.state.mode === "Sign Up") {
@@ -91,7 +101,7 @@ class Auth extends Component {
         <span className="Errors">{errors.passwordConfirm}</span>
         <br />
        </div>: null}
-       <button type="submit" className="btn btn-success">{this.state.mode === "Sign Up" ? "Login" : "Sign Up"}</button>
+       <button type="submit" className="btn btn-success">{this.state.mode !== "Sign Up" ? "Login" : "Sign Up"}</button>
       </form>
      </div>)}
     </Formik>
@@ -100,4 +110,4 @@ class Auth extends Component {
  }
 }
 
-export default Auth;
+export default connect(null, mapDispatchToProps)(Auth);
