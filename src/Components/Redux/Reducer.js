@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, RESET_INGREDIENTS, UPDATE_PURCHASEABLE } from "./ActionType";
+import { ADD_INGREDIENT, LOAD_ORDERS, REMOVE_INGREDIENT, RESET_INGREDIENTS, UPDATE_PURCHASEABLE } from "./ActionType";
 
 const INGREDIENT_PRICES = {
  salad: 20,
@@ -12,8 +12,12 @@ const initialState = {
   { type: 'cheese', amount: 0 },
   { type: 'meat', amount: 0 }
  ],
+ 
  totalPrice: 80,
  purchaseable: false,
+ orderLoading: true,
+ orderErr: false,
+ orders:[],
 }
 
 const Reducer = (state = initialState, action) => {
@@ -62,6 +66,20 @@ const Reducer = (state = initialState, action) => {
     totalPrice: 80,
     purchaseable: false,
    }
+  case LOAD_ORDERS:
+   let orders=[]
+   for (let key in action.payload) {
+    orders.push({
+     ...action.payload[key],
+     id:key
+    })
+   }
+   return {
+    ...state,
+    orders: orders,
+    orderLoading:false,
+   }
+  
   default: return state;
  }
 }

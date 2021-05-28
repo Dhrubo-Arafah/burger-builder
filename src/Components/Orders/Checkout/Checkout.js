@@ -54,7 +54,7 @@ export class Checkout extends Component {
   }
   axios.post("https://burger-builder-b1bb9-default-rtdb.firebaseio.com/order.json", order)
    .then(response => {
-    if (response.status == 200) {
+    if (response.status === 200) {
      this.setState({
       isLoading: false,
       isModalOpen: true,
