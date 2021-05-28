@@ -35,6 +35,9 @@ class Header extends Component{
         <NavItem>
          <Link className="nav-link" to="/order">Order</Link>
         </NavItem>
+        <NavItem>
+         <Link className="nav-link" to="/login">Login</Link>
+        </NavItem>
        </Nav>
       </Collapse>
      </div>

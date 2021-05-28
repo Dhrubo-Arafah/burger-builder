@@ -1,0 +1,10 @@
+.Form{
+ border: 1px solid gray;
+ padding: 20px;
+
+}
+
+.Errors{
+ color:red;
+ margin-bottom: 20px
+}
