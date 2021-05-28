@@ -3,11 +3,21 @@ import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem } from 'reac
 import './Header.css'
 import Logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+const mapStateToProps = state => {
+ return {
+  token:state.token
+ }
+}
 
 class Header extends Component{
- state = {
-  isNavOpen:false
- }
+ constructor(props) {
+  super(props);
+  this.state = {
+   isNavOpen: false
+  }
+}
 
  navToggler = () => {
   this.setState({
@@ -16,6 +26,31 @@ class Header extends Component{
 }
 
  render() {
+
+  console.log(this.props)
+
+  let links = null;
+  if (this.props.token === null) {
+   links = (
+    <Nav className="mr-md-5">
+     <NavItem>
+      <Link exact="true" to="/login" className="NavLink">Login</Link>
+     </NavItem>
+    </Nav>
+   )
+  } else {
+   links = (
+    <Nav className="mr-md-5">
+     <NavItem>
+      <Link exact="true" to="/" className="NavLink">Burger Builder</Link>
+     </NavItem>
+     <NavItem>
+      <Link exact="true" to="/orders" className="NavLink">Orders</Link>
+     </NavItem>
+    </Nav>
+   )
+  }
+
   return (
    <div className="Navigation" >
     <Navbar className="Navbar" expand="sm" dark color="dark" exact="true" >
@@ -25,20 +60,7 @@ class Header extends Component{
       </NavbarBrand>
       <NavbarToggler onClick={this.navToggler} />
       <Collapse navbar isOpen={this.state.isNavOpen}>
-       <Nav navbar className="mr-auto">
-        <NavItem>
-         <Link className="nav-link" to="/">Burger Builder</Link>
-        </NavItem>
-        <NavItem>
-         <Link className="nav-link" to="/checkout">Checkout</Link>
-        </NavItem>
-        <NavItem>
-         <Link className="nav-link" to="/order">Order</Link>
-        </NavItem>
-        <NavItem>
-         <Link className="nav-link" to="/login">Login</Link>
-        </NavItem>
-       </Nav>
+       {links}
       </Collapse>
      </div>
     </Navbar>
@@ -47,4 +69,4 @@ class Header extends Component{
  }
 }
 
-export default Header
+export default connect(mapStateToProps)(Header)

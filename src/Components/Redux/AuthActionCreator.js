@@ -1,6 +1,17 @@
 import axios from "axios"
+import { AUTH_SUCCESS } from "./ActionType"
 
-export const auth = (email, password, mood) =>dispatch=> {
+export const authSuccess = (token, userId) => {
+ return{
+  type: AUTH_SUCCESS,
+   payload: {
+    token: token,
+    userId: userId,
+   }
+ }
+}
+
+export const auth = (email, password, mood) => dispatch => {
  const authData = {
   email: email,
   password: password,
@@ -14,5 +25,7 @@ export const auth = (email, password, mood) =>dispatch=> {
   authUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
  }
  axios.post(authUrl + API_KEY, authData)
-.then(response=>console.log(response))
+  .then(response => {
+   dispatch(authSuccess(response.data.idToken, response.data.localId));
+  })
 }
