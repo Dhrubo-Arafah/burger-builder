@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, AUTH_LOGOUT, AUTH_SUCCESS, LOAD_ORDERS, ORDER_LOAD_FAILED, REMOVE_INGREDIENT, RESET_INGREDIENTS, UPDATE_PURCHASEABLE } from "./ActionType";
+import { ADD_INGREDIENT, AUTH_LOADING, AUTH_LOGOUT, AUTH_SUCCESS, LOAD_ORDERS, ORDER_LOAD_FAILED, REMOVE_INGREDIENT, RESET_INGREDIENTS, UPDATE_PURCHASEABLE } from "./ActionType";
 
 const INGREDIENT_PRICES = {
  salad: 20,
@@ -20,6 +20,8 @@ const initialState = {
  orders: [],
  token: null,
  userId: null,
+ authLoading: false,
+ authFailed: null,
 }
 
 const BurgerReducer = (state = initialState, action) => {
@@ -100,6 +102,12 @@ const BurgerReducer = (state = initialState, action) => {
     token: null,
     userId:null
    }
+  case AUTH_LOADING:
+   return {
+    ...state,
+    authLoading:action.payload
+   }
+  
   default: return state;
  }
 }
