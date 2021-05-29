@@ -5,13 +5,15 @@ const Order = props => {
  const ingredients = props.order.ingredients.map(item => {
   return (
    <span key={item.type} className="Item">
-    {item.amount} X <span style={ {textTransform:"capitalize"}}>{item.type}</span>
+    {item.amount} X <span style={{textTransform:"capitalize"}}>{item.type}</span>
    </span>
  )
-})
+ })
+
+  console.log(props)
  return (
   <div className="Order">
-   <p>Order Number: {props.order.key}</p>
+   <p>Order Number: {props.order.id}</p>
    <p>Delivery Address: {props.order.customer.deliveryAddress}</p>
    <p>Total: {props.order.price}</p>
    {ingredients}

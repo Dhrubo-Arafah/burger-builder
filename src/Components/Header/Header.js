@@ -25,10 +25,7 @@ class Header extends Component{
  })
 }
 
- render() {
-
-  console.log(this.props)
-
+  render() {
   let links = null;
   if (this.props.token === null) {
    links = (
@@ -46,7 +43,10 @@ class Header extends Component{
      </NavItem>
      <NavItem>
       <Link exact="true" to="/orders" className="NavLink">Orders</Link>
-     </NavItem>
+       </NavItem>
+       <NavItem>
+         <Link exact="true" to="/logout" className="NavLink">Logout</Link>
+       </NavItem>
     </Nav>
    )
   }

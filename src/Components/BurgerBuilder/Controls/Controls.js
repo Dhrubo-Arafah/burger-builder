@@ -9,7 +9,6 @@ const controls = [
 ]
 
 const BuildControl = props => {
-  console.log(props)
   return (
     <div className="BuildControl d-flex justify-content-between" >
       <div className="mr-auto ml-5">{props.label}</div>

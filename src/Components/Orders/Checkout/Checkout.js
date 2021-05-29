@@ -51,7 +51,8 @@ export class Checkout extends Component {
    customer: this.state.values,
    price: this.props.totalPrice,
    orderTime: new Date()
-  }
+   }
+   console.log(order)
   axios.post("https://burger-builder-b1bb9-default-rtdb.firebaseio.com/order.json", order)
    .then(response => {
     if (response.status === 200) {

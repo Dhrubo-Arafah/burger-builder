@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { auth } from '../Redux/AuthActionCreator';
 
 const mapDispatchToProps = dispatch => {
+  console.log(dispatch)
  return {
   auth:(email, password, mode)=>dispatch(auth(email, password, mode))
  }

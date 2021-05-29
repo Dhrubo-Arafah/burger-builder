@@ -47,8 +47,7 @@ class BurgerBuilder extends Component {
  }
 
  render() {
-  console.log(this.props.ingredients[0].amount)
-  return (
+return (
    <div>
     <div className="d-flex w-100 flex-md-row flex-column">
      <Burger
@@ -68,8 +67,9 @@ class BurgerBuilder extends Component {
     <Modal isOpen={this.state.modalOpen}>
      <ModalHeader>Your Order Summary</ModalHeader>
      <ModalBody>
-      <Summery ingredients={this.props.ingredients}/>
-      <h5>Total Price: { this.props.totalPrice.toFixed(0)}BDT</h5>
+
+    <Summery ingredients={this.props.ingredients} />
+    <h5>Total Price: {this.props.totalPrice.toFixed(0)}BDT</h5>
      </ModalBody>
      <ModalFooter>
       <Button color="success" onClick={this.handleCheckOut}>Continue to checkout</Button>

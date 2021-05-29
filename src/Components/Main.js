@@ -1,26 +1,66 @@
-import React from 'react'
+import { connect } from 'react-redux'
+import React, { Component } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Auth from './Auth/Auth'
 import BurgerBuilder from './BurgerBuilder/BurgerBuilder'
 import Header from './Header/Header'
 import Checkout from './Orders/Checkout/Checkout'
 import Orders from './Orders/Orders'
+import { authCheck } from './Redux/AuthActionCreator'
+import Logout from './Auth/Logout'
 
-const Main = () => {
-  return (
-    <div>
-      <Header />
-      <div className="container">
-        <Switch>
-          <Route exact path="/order" component={Orders} />
-          <Route exact path="/checkout" component={Checkout} />
-          <Route exact path="/login" component={Auth} />
-          <Route exact path="/"  component={BurgerBuilder} />
-          <Redirect to="/" from="/burger-builder" />
-        </Switch>
-      </div>
-    </div>
-  )
+const mapStateToProps = state => {
+  return {
+    token:state.token,
+  }
 }
 
-export default Main
+const mapDispatchToProps = dispatch => {
+  return {
+    authCheck: () => dispatch(authCheck()),
+  }
+}
+
+class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    }
+  }
+
+  componentDidMount() {
+    this.props.authCheck();
+}
+
+  render() {
+    let routes = null;
+    if (this.props.token === null) {
+      routes = (
+        <Switch>
+          <Route path="/login" component={Auth} />
+          <Redirect to="/login" />
+        </Switch>
+      )
+    } else {
+      routes = (
+        <Switch>
+          <Route path="/orders" component={Orders} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/" exact component={BurgerBuilder} />
+          <Route path="/logout" component={Logout} />
+          <Redirect to="/" />
+        </Switch>
+      )
+    }
+    return (
+      <div>
+        <Header />
+        <div className="container">
+          {routes}
+        </div>
+      </div>
+    )
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

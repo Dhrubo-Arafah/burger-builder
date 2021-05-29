@@ -5,25 +5,24 @@ import Order from './Order/Order';
 import Spinner from '../Spinner/Spinner'
 
 const mapStateToProps = state => {
+ console.log(state)
  return {
   orders: state.orders,
   orderLoading: state.ordersLoading,
-  orderErr:state.orderErr
+  orderErr: state.orderErr
  }
 }
 
 const mapDispatchToProps = dispatch => {
  return {
-  fetchOrders:()=>dispatch(fetchOrders()),
+  fetchOrders: () => dispatch(fetchOrders()),
  }
 }
 class Orders extends Component {
  componentDidMount() {
   this.props.fetchOrders();
  }
- componentDidUpdate() {
-  console.log(this.props.orders)
- }
+
  render() {
   let orders = null;
   if (this.props.orderErr) {
@@ -40,7 +39,8 @@ class Orders extends Component {
   }
   return (
    <div>
-    {this.props.orderLoading?<Spinner/>: orders}
+    <h1>Orders</h1>
+    {this.props.orderLoading ? <Spinner /> : orders}
    </div>
   )
  }
